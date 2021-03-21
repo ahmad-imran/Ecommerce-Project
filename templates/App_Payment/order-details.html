@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+  <div class="container">
+    <div class="col-md-12">
+      <div class="jumbotron">
+        Name: {{ order.user.profile.full_name }}<br/>
+        Email: {{ order.user.email }}
+      </div>
+    </div>
+    <button class="float-right btn btn-primary" id="printButton" onclick="window.print()">Print</button>
+    <h1>Invoice</h1>
+    <hr style="margin-top: -15px; "/>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for item in order.orderitems.all %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ item.item.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.get_total }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>Total</th>
+        <th></th>
+        <th></th>
+        <th>{{ total_amount }}</th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+{% endblock %}
+
+{% block footer %} QByteSoft Ltd. {% endblock %}
+
+{% block javascript %}
+{% endblock %}
